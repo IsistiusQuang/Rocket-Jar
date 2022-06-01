@@ -3,6 +3,7 @@ import os
 from random import randint , choice
 
 from Backdrop import WIN_WIDTH , WIN_HEIGHT
+from Base_Class import Base_obj
 
 
 ran_list = [-3.0,-2.0,2.0,3.0]
@@ -10,7 +11,7 @@ def Alter_range():
     return choice(ran_list)
 
 
-class Astroid_class:
+class Astroid_class(Base_obj):
     astroid_stage = 0
     move_count = 0
     move_limit = 3
@@ -24,13 +25,11 @@ class Astroid_class:
     def __init__(self,name,x,y,width,height):
         self.image = pygame.transform.scale(
             pygame.image.load(os.path.join('Assets',str(name))),(width,height))
-        self.width = int(width)
-        self.height = int(height)
-        self.current_x = float(x+width)
-        self.current_y = float(y-height)
+        Base_obj.__init__(self,x+width,y-height,width,height)
+        self.current_x = self.x
+        self.current_y = self.y
         self.current_x_limit = []
         self.current_y_limit = []
-        self.obj = pygame.Rect(int(x)+width,int(y)-height,self.width,self.height)
         self.checkpoints = []
         self.previous_vel = [0,0]
         self.delay_frame = choice([0,20,40,60])

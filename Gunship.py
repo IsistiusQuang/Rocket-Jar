@@ -3,10 +3,11 @@ import os
 
 from Backdrop import WIN_WIDTH , WIN_HEIGHT
 from Target import Prize
+from Checkpoints import Gunship_Border
+from Base_Class import Base_obj
 
 
-class Gunship:
-    height , width = 40,40
+class Gunship(Base_obj):
     score = 0
     mov_vel = 5
     bul_vel = 3
@@ -15,32 +16,27 @@ class Gunship:
     # like c++ constructor
     # this method is called whenever an obj of this class is instantiated
 
-    def __init__(self,name,file_name,facing):
+    def __init__(self,x,y,name,file_name,facing):
+        Base_obj.__init__(self,x,y,40,40)
         self.name = str(name)
         self.file_name = str(file_name)
-        self.starting_position = []
-        self.x = int()
-        self.y = int()
         self.facing = str(facing)
+        self.border = Gunship_Border(self.facing)
         self.bullet_list = []
+        self.image = None
+        self.making_image()
 
-        self.obj = None
 
-
-    def making_image(self,Rotate):
+    def making_image(self):
+        Rotate = int()
+        if self.facing == "Horizontal":
+            Rotate = 90
+        elif self.facing == "Vertical":
+            Rotate = 180
         Image = pygame.image.load(os.path.join('Assets',self.file_name))
         Scale = pygame.transform.scale(Image,(self.width,self.height))
         Orientation = pygame.transform.rotate(Scale,Rotate)
-        return Orientation
-
-
-    def make_staring_position(self,x,y):
-        self.starting_position.append(int(x))
-        self.starting_position.append(int(y))
-
-        self.x = x
-        self.y = y
-        self.obj = pygame.Rect(self.x,self.y,self.width,self.height)
+        self.image = Orientation
 
 
     def movement(self,keys_pressed):
@@ -86,13 +82,9 @@ class Gunship:
                     break
 
 
-YELLOW_SPACESHIP = Gunship("YELLOW","spaceship_yellow.png",'Horizontal')
-RED_SPACESHIP = Gunship("RED","spaceship_red.png",'Vertical')
+YELLOW_SPACESHIP = Gunship(10,Prize.y - 40 - 10,"YELLOW","spaceship_yellow.png",'Horizontal')
+RED_SPACESHIP = Gunship(Prize.x + Prize.width + 10,WIN_HEIGHT - 40 - 10,"RED","spaceship_red.png",'Vertical')
 
-YELLOW_SPACESHIP.make_staring_position(
-    10 , Prize.y - YELLOW_SPACESHIP.width - 10)
-RED_SPACESHIP.make_staring_position(
-    Prize.x + Prize.width + 10, WIN_HEIGHT - RED_SPACESHIP.height - 10)
 
 
 

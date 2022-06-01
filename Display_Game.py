@@ -6,7 +6,6 @@ from Gunship import YELLOW_SPACESHIP,RED_SPACESHIP
 from Backdrop import WIN_WIDTH , WIN_HEIGHT , SPACE
 from List_Of_Astroids import Astroids
 from Target import Prize
-from Checkpoints import Vertical , Horizontal
 
 
 WIN = pygame.display.set_mode((WIN_WIDTH,WIN_HEIGHT))
@@ -26,12 +25,6 @@ def game_over():
     pygame.time.delay(3000)
 
 
-yellowsp_image = YELLOW_SPACESHIP.making_image(90)
-redsp_image = RED_SPACESHIP.making_image(180)
-
-yellowsp_border = pygame.Rect(Horizontal.border)
-redsp_border = pygame.Rect(Vertical.border)
-
 def draw_surface():
 
     WIN.blit(SPACE.image,(0,0))
@@ -39,11 +32,11 @@ def draw_surface():
     health_text = HEALTH_FONT.render(str(Prize.health),1,WHITE)
     WIN.blit(health_text,(20 , WIN_HEIGHT - health_text.get_height() - 10))
 
-    pygame.draw.rect(WIN,WHITE,yellowsp_border)
-    pygame.draw.rect(WIN,WHITE,redsp_border)
+    pygame.draw.rect(WIN,WHITE,YELLOW_SPACESHIP.border.obj)
+    pygame.draw.rect(WIN,WHITE,RED_SPACESHIP.border.obj)
 
-    WIN.blit(yellowsp_image,(YELLOW_SPACESHIP.x,YELLOW_SPACESHIP.y))
-    WIN.blit(redsp_image,(RED_SPACESHIP.x,RED_SPACESHIP.y))
+    WIN.blit(YELLOW_SPACESHIP.image,(YELLOW_SPACESHIP.x,YELLOW_SPACESHIP.y))
+    WIN.blit(RED_SPACESHIP.image,(RED_SPACESHIP.x,RED_SPACESHIP.y))
 
     for bullet in YELLOW_SPACESHIP.bullet_list:
         pygame.draw.rect(WIN,YELLOW,bullet)

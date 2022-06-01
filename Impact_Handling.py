@@ -9,6 +9,10 @@ ASTROID_HIT_SOUND = pygame.mixer.Sound('Assets/Grenade+1.mp3')
 TARGET_HIT_SOUND = pygame.mixer.Sound('Assets/Grenade+1.mp3')
 BULLET_FIRE_SOUND = pygame.mixer.Sound('Assets/Gun+Silencer.mp3')
 
+ASTROID_HIT_SOUND.set_volume(0.1)
+TARGET_HIT_SOUND.set_volume(0.1)
+BULLET_FIRE_SOUND.set_volume(0.1)
+
 PRICE_HIT = pygame.USEREVENT + 1
 ASTROID_HIT = pygame.USEREVENT + 2
 
