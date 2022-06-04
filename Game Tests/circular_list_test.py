@@ -1,3 +1,8 @@
-mylist = [10,20]
-mylist[0],mylist[1] = mylist[1],mylist[0]
-print(mylist)
+import pygame
+
+# polygon
+
+
+# Arc
+def make_arc( surface, color , rect , start_angle, stop_angle , width ):
+    pygame.draw.arc(surface,color,rect,start_angle,stop_angle,width)
