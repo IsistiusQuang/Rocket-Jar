@@ -4,14 +4,17 @@ from random import randint , choice
 
 from Backdrop import WIN_WIDTH , WIN_HEIGHT
 from Base_Class import Base_obj
+from Ast_Health_Bar import Ast_Hlth_Bar
 
 
 ran_list = [-3.0,-2.0,2.0,3.0]
+#ran_list = [-1.0,1.0]
 def Alter_range():
     return choice(ran_list)
 
 
 class Astroid_class(Base_obj):
+    astr_health = 2
     astroid_stage = 0
     move_count = 0
     move_limit = 3
@@ -28,6 +31,7 @@ class Astroid_class(Base_obj):
         Base_obj.__init__(self,x+width,y-height,width,height)
         self.current_x = self.x
         self.current_y = self.y
+        self.health_bar = Ast_Hlth_Bar(self.x,self.y,self.width,self.astr_health)
         self.current_x_limit = []
         self.current_y_limit = []
         self.checkpoints = []
@@ -120,6 +124,7 @@ class Astroid_class(Base_obj):
         else:
             self.current_y += self.current_alter_y
             self.obj.y = self.current_y
+        self.health_bar.move(self.obj.x,self.obj.y)
         #print(f"x2 : {self.obj.x} \t y2 : {self.obj.y}")
         #print(f"current alter x = {self.current_alter_x}\tcurrent alter y = {self.current_alter_y}")
 

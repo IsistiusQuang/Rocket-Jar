@@ -49,7 +49,7 @@ def draw_surface():
         #third = ( rock.current_x_limit[0]-2 , rock.current_y_limit[0] , 4 , rock.current_y_limit[1] - rock.current_y_limit[0] )
         #fourth = ( rock.current_x_limit[0] , rock.current_y_limit[1]-2 , rock.current_x_limit[1] - rock.current_x_limit[0] , 4 )
         WIN.blit(rock.image,(rock.obj.x,rock.obj.y))
-
+        rock.health_bar.draw(WIN)
         #pygame.draw.rect(WIN,BLACK,(first))
         #pygame.draw.rect(WIN,BLACK,(second))
         #pygame.draw.rect(WIN,BLACK,(third))

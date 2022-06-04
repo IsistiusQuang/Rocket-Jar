@@ -29,19 +29,13 @@ def astroid_impact(astroid,price):
 
 def bullet_impact(astroid,spaceship):
     for bullet in spaceship.bullet_list:
-        if spaceship.facing == "Horizontal":
-            if bullet.colliderect(astroid.obj):
-                ASTROID_HIT_SOUND.play()
-                spaceship.bullet_list.remove(bullet)
-                spaceship.score += 1
+        if bullet.colliderect(astroid.obj):
+            ASTROID_HIT_SOUND.play()
+            astroid.astr_health -= 1
+            astroid.health_bar.decreasin_length()
+            spaceship.bullet_list.remove(bullet)
+            if astroid.astr_health == 0:
                 astroid.astroid_stage = 1
-                break
-
-        elif spaceship.facing == "Vertical":
-            if bullet.colliderect(astroid.obj):
-                ASTROID_HIT_SOUND.play()
-                spaceship.bullet_list.remove(bullet)
                 spaceship.score += 1
-                astroid.astroid_stage = 1
-                break
+            break
 
