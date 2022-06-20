@@ -5,7 +5,7 @@ from random import randint , choice
 from Backdrop import WIN_WIDTH , WIN_HEIGHT
 from Base_Class import Base_obj
 from Ast_Health_Bar import Ast_Hlth_Bar
-
+from Ast_Hitted import Astr_shadow , flickering
 
 ran_list = [-3.0,-2.0,2.0,3.0]
 #ran_list = [-1.0,1.0]
@@ -14,20 +14,17 @@ def Alter_range():
 
 
 class Astroid_class(Base_obj):
-    astr_health = 2
+    astr_health = 6
     astroid_stage = 0
     move_count = 0
-    move_limit = 3
+    move_limit = 3 # test figure = 15
     current_alter_x = -2
     current_alter_y = 2
-    # current_x_limit = [WIN_WIDTH,0]   any list that look like this in any object is alias to the same [WIN_WIDTH,0]
-    # current_y_limit = [WIN_HEIGHT,0]  so change to one is change to all so funny =)) never pre declare out of __init__
-                            # [anylist].copy() will use 1 list of addresses if predeclare
-                            # so in class attr if in the same pos will have the same copy() reference every class obj
+    flickered = flickering
 
     def __init__(self,name,x,y,width,height):
-        self.image = pygame.transform.scale(
-            pygame.image.load(os.path.join('Assets',str(name))),(width,height))
+        self.image = self.make_image(name,width,height)
+        self.shadow = Astr_shadow(self.image,self.make_image(name[:-4]+"_hitted" + name[-4:],width,height))
         Base_obj.__init__(self,x+width,y-height,width,height)
         self.current_x = self.x
         self.current_y = self.y
@@ -39,6 +36,11 @@ class Astroid_class(Base_obj):
         self.delay_frame = choice([0,20,40,60])
         self.frame_count = 0
         self.frame_limit = self.delay_frame + (self.height//self.current_alter_y)
+
+
+    def make_image(self,name,width,height):
+        return pygame.transform.scale(
+            pygame.image.load(os.path.join('Assets',name)),(width,height))
 
 
     def make_vel(self):
@@ -54,7 +56,7 @@ class Astroid_class(Base_obj):
 
     def make_border_limit(self):
         self.move_count = 0
-        self.move_limit = 3
+        #self.move_limit = 3
 
         self.current_x_limit.clear()
         self.current_y_limit.clear()
@@ -108,6 +110,7 @@ class Astroid_class(Base_obj):
     def move(self):
         #print(f"x1 : {self.obj.x} \t y1 : {self.obj.y}")
         #print(f"current alter x = {self.current_alter_x}\tcurrent alter y = {self.current_alter_y}")
+        self.flickered()
         self.frame_count += 1
         if self.obj.x + self.width + self.current_alter_x > self.current_x_limit[1] or self.obj.x + self.current_alter_x < self.current_x_limit[0] :
             self.current_alter_x = - self.current_alter_x
@@ -129,8 +132,8 @@ class Astroid_class(Base_obj):
         #print(f"current alter x = {self.current_alter_x}\tcurrent alter y = {self.current_alter_y}")
 
     def to_checkpoint(self):
-        self.move_count = 0
-        self.move_limit = 0
+        self.move_count = self.move_limit
+        #self.move_limit = 0
         self.frame_count = 0
         objective = self.checkpoints[-1]
         self.frame_limit = randint(80,100)

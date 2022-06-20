@@ -15,8 +15,8 @@ BLACK = (0,0,0)
 RED = (255,50,50)
 YELLOW = (255,255,0)
 
-HEALTH_FONT = pygame.font.SysFont('comicsans',50)
-WINNER_FONT = pygame.font.SysFont('comicsans',80)
+HEALTH_FONT = pygame.font.SysFont('comicsans',30)
+WINNER_FONT = pygame.font.SysFont('comicsans',50)
 gameover_text = WINNER_FONT.render("GAME OVER",1,WHITE)
 def game_over():
     WIN.blit(SPACE.image,(0,0))

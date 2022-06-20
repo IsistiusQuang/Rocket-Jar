@@ -22,9 +22,9 @@ def Starting_positions(obj_width):
 class Astroid_limits:
     def __init__(self):
         self.Astroid_list = []
-        self.wave = 3
+        self.wave = 1
         self.wave_count = 0
-        self.astroid_num = 3
+        self.astroid_num = 1
 
     def fill_list(self):
         while len(self.Astroid_list) < self.astroid_num :

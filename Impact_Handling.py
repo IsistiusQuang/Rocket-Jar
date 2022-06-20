@@ -33,6 +33,7 @@ def bullet_impact(astroid,spaceship):
             ASTROID_HIT_SOUND.play()
             astroid.astr_health -= 1
             astroid.health_bar.decreasin_length()
+            astroid.shadow.init_flicker()
             spaceship.bullet_list.remove(bullet)
             if astroid.astr_health == 0:
                 astroid.astroid_stage = 1

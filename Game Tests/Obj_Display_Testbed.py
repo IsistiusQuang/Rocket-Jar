@@ -1,7 +1,5 @@
 import pygame
 
-from circular_list_test import make_arc
-
 WIN = pygame.display.set_mode((500,500))
 
 WHITE = [255,255,255]

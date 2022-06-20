@@ -11,7 +11,7 @@ class Gunship(Base_obj):
     score = 0
     mov_vel = 5
     bul_vel = 10
-    bullets_limit = 3
+    bullets_limit = 5
     # __init__ is the attributes method for python class
     # like c++ constructor
     # this method is called whenever an obj of this class is instantiated
