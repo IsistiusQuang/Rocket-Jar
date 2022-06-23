@@ -15,25 +15,6 @@ class Astroid_Checkpoint:
         self.high_y = d
 
 
-class Gunship_Border(Base_obj):
-    def __init__(self,facing):
-        self.border = None
-        if facing == "Vertical":
-            x = Prize_H_Rect + 10
-            y = Prize_V_Rect
-            width = WIN_WIDTH - x
-            height = 5
-            Base_obj.__init__(self,x,y,width,height)
-
-
-        elif facing == "Horizontal":
-            x = 10 + 40 + 10
-            y = 0
-            width = 5
-            height = Prize.y - 10
-            Base_obj.__init__(self,x,y,width,height)
-
-
 Checkpoint_1 = Astroid_Checkpoint( 65 , 0 , WIN_WIDTH , Prize_V_Rect )
 Checkpoint_2 = Astroid_Checkpoint( 65 , round((Prize_V_Rect)/2,3),round((WIN_WIDTH + 65)/2,3) , Prize_V_Rect )
 Checkpoint_3 = Astroid_Checkpoint( Prize.x , Prize.y , Prize_H_Rect , Prize_V_Rect )
