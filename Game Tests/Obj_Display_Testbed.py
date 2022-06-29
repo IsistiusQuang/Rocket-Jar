@@ -1,4 +1,5 @@
 import pygame
+import pygame.gfxdraw
 
 WIN = pygame.display.set_mode((500,500))
 
@@ -7,6 +8,7 @@ BLACK = [10.5,0.0,0]
 RED = [255,50,50]
 YELLOW = [255,255,0]
 GREEN = [0,255,0]
+LI_GREY = [175,175,175]
 
 class Base_obj:
     def __init__(self,x,y,width,height):
@@ -16,40 +18,63 @@ class Base_obj:
         self.height = height
         self.obj = pygame.Rect((self.x,self.y),(self.width,self.height))
 
-class Ast_Hlth_Bar():
-    hlth_width = 60
-    hlth_height = 5
-    frame_count = 0
-    def __init__(self,ast_x,ast_y,ast_width,ast_health):
-        self.inner = Base_obj(ast_x - (self.hlth_width-ast_width)/2 , ast_y - self.hlth_height - 10 , self.hlth_width , self.hlth_height )
-        self.outer = Base_obj(self.inner.obj.x - 1 , self.inner.obj.y - 1 , self.inner.obj.width + 2 , self.inner.obj.height + 2 )
-        self.color = GREEN[:]
-        self.health = ast_health
-    def draw(self):
-        pygame.draw.rect(WIN,self.color,self.inner.obj,0,2)
-        pygame.draw.rect(WIN,BLACK,self.outer.obj,1,2)
-    def shiftin_color(self):
-        if self.color[0] + 255/5 <= 255 :
-            self.color[0] += 255/5
-        if self.color[0] >= 255/10*9 and self.color[1] - 255/5 >= 0:
-            self.color[1] -= 255/5
-    def decreasing_length(self):
-        self.frame_count += 1
-        if self.frame_count == 60:
-            self.frame_count = 0
-            if self.inner.obj.w - self.inner.width/self.health >= 0:
-                self.inner.obj.w -= self.inner.width/self.health
-                self.shiftin_color()
+class Ammo(Base_obj):
+    def __init__(self,x,y,width,height):
+        Base_obj.__init__(self,x,y,width,height)
+        self.color = YELLOW
 
-#B1 = Base_obj(100,100,200,200)
-H1 = Ast_Hlth_Bar(100,100,120,10)
+
+class Magazine(Base_obj):
+    frame_count = 0
+    frame_limit = 90
+    def __init__(self,capa,rld_sp):
+        super().__init__(100,100,30,60)
+        self.capacity = capa
+        self.reload_speed = rld_sp
+        self.bullet_dict = {}
+        self.make_bullet_dict()
+        self.iterator = self.bul_index()
+
+    def draw(self):
+        pygame.draw.rect(WIN,LI_GREY,self.obj,0,2)
+        pygame.draw.rect(WIN,BLACK,self.obj,1,2)
+        for bul in self.bullet_dict.values():
+            pygame.draw.rect(WIN,bul.color,bul.obj,0,3)
+            pygame.draw.rect(WIN,BLACK,bul.obj,1,3)
+
+    def make_ammo_height(self):
+        return (self.height - 3 * (self.capacity + 1))/self.capacity
+
+    def make_bullet_dict(self):
+        current_y = self.y + 3
+        for i in range(0,self.capacity):
+            self.bullet_dict[i] = Ammo(self.x + 3 , current_y , self.width - 6 , self.make_ammo_height())
+            current_y += self.make_ammo_height() + 3
+
+    def bul_index(self):
+        for index in self.bullet_dict.keys():
+            yield index
+
+    def make_changes(self):
+        try:
+            current_index = next(self.iterator)
+            self.bullet_dict[current_index].color = RED
+
+        except StopIteration:
+            if self.frame_counter():
+                self.frame_count = 0
+                self.iterator = self.bul_index()
+                for obj in self.bullet_dict.values():
+                    obj.color = YELLOW
+
+Mag = Magazine(5,10)
+n = 0
 
 
 def draw_surface():
-    WIN.fill(WHITE)
-    H1.draw()
-    H1.decreasing_length()
-    #make_arc(WIN,GREEN,B1.obj,0,3,0)
+    WIN.fill(LI_GREY)
+    Mag.draw()
+    #pygame.gfxdraw.hline(WIN,50,100,50,BLACK)
     pygame.display.update()
 
 

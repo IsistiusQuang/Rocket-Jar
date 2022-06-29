@@ -12,7 +12,6 @@ class Gunship(Base_obj):
     score = 0
     mov_vel = 5
     bul_vel = 10
-    bullets_limit = 5
     # __init__ is the attributes method for python class
     # like c++ constructor
     # this method is called whenever an obj of this class is instantiated
@@ -28,6 +27,7 @@ class Gunship(Base_obj):
             pygame.transform.scale(
             pygame.image.load(
                 os.path.join('Assets',self.file_name)), (self.width,self.height)), self.rotate )
+
 
 class V_GS(Gunship,Vertical_GS):
     pass

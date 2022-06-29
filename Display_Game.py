@@ -39,9 +39,12 @@ def draw_surface():
     WIN.blit(RED_SPACESHIP.image,(RED_SPACESHIP.x,RED_SPACESHIP.y))
 
     for bullet in YELLOW_SPACESHIP.bullet_list:
-        pygame.draw.rect(WIN,YELLOW,bullet)
+        pygame.draw.rect(WIN,YELLOW_SPACESHIP.color,bullet)
     for bullet in RED_SPACESHIP.bullet_list:
-        pygame.draw.rect(WIN,RED,bullet)
+        pygame.draw.rect(WIN,RED_SPACESHIP.color,bullet)
+
+    YELLOW_SPACESHIP.mag.draw(WIN)
+    RED_SPACESHIP.mag.draw(WIN)
 
     for rock in Astroids.Astroid_list:
         #first = ( rock.current_x_limit[0] , rock.current_y_limit[0]-2 , rock.current_x_limit[1] - rock.current_x_limit[0] , 4 )
