@@ -17,7 +17,7 @@ class Ammo(Base_obj):
 
 class Magazine(Base_obj):
     frame_count = 0
-    frame_limit = 120
+    frame_limit = 90
     capacity = 6
 
     def __init__(self,x,y,color):

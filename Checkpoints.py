@@ -19,5 +19,5 @@ Checkpoint_1 = Astroid_Checkpoint( 65 , 0 , WIN_WIDTH , Prize_V_Rect )
 Checkpoint_2 = Astroid_Checkpoint( 65 , round((Prize_V_Rect)/2,3),round((WIN_WIDTH + 65)/2,3) , Prize_V_Rect )
 Checkpoint_3 = Astroid_Checkpoint( Prize.x , Prize.y , Prize_H_Rect , Prize_V_Rect )
 
-for c in [Checkpoint_1,Checkpoint_2,Checkpoint_3]:
-    print(f"low_x = {c.low_x} \t low_y = {c.low_y} \t high_x = {c.high_x} \t high_y = {c.high_y}")
+#for c in [Checkpoint_1,Checkpoint_2,Checkpoint_3]:
+#    print(f"low_x = {c.low_x} \t low_y = {c.low_y} \t high_x = {c.high_x} \t high_y = {c.high_y}")

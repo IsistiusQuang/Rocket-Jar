@@ -19,6 +19,7 @@ ASTROID_HIT = pygame.USEREVENT + 2
 
 def astroid_impact(astroid,price):
     if astroid.obj.colliderect(price.obj):
+        price.init_flicker()
         TARGET_HIT_SOUND.play()
         if price.health == 1:
             pygame.event.post(pygame.event.Event(PRICE_HIT))

@@ -5,6 +5,7 @@ from Backdrop import WIN_WIDTH , WIN_HEIGHT
 from Astroid import Astroid_class
 from Checkpoints import Checkpoint_1, Checkpoint_2 ,Checkpoint_3
 
+pygame.display.init()
 
 ASTROID_NAMES = ['Astroid_1.png','Astroid_2.png','Astroid_3.png']
 Plausible_sizes = []
@@ -22,9 +23,10 @@ def Starting_positions(obj_width):
 class Astroid_limits:
     def __init__(self):
         self.Astroid_list = []
-        self.wave = 3
+        self.wave = 1
         self.wave_count = 0
         self.astroid_num = 3
+        self.astroid_limit = 8
 
     def fill_list(self):
         while len(self.Astroid_list) < self.astroid_num :
@@ -47,7 +49,8 @@ class Astroid_limits:
             self.wave_count += 1
             self.fill_list()
             self.fill_in_checkpoints([Checkpoint_3,Checkpoint_2,Checkpoint_1])
-            self.astroid_num += 2
+            if self.astroid_num <= self.astroid_limit:
+                self.astroid_num += 2
 
 Astroids = Astroid_limits()
 Astroids.next_wave()

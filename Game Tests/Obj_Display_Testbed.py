@@ -1,14 +1,17 @@
 import pygame
-import pygame.gfxdraw
+import os
+pygame.display.init()
 
-WIN = pygame.display.set_mode((500,500))
+from random import randint,choice
+
+WIN = pygame.display.set_mode((700,700))
 
 WHITE = [255,255,255]
 BLACK = [10.5,0.0,0]
 RED = [255,50,50]
 YELLOW = [255,255,0]
 GREEN = [0,255,0]
-LI_GREY = [175,175,175]
+GREY = [175,175,175]
 
 class Base_obj:
     def __init__(self,x,y,width,height):
@@ -16,65 +19,32 @@ class Base_obj:
         self.y = y
         self.width = width
         self.height = height
-        self.obj = pygame.Rect((self.x,self.y),(self.width,self.height))
-
-class Ammo(Base_obj):
-    def __init__(self,x,y,width,height):
-        Base_obj.__init__(self,x,y,width,height)
-        self.color = YELLOW
+        self.obj = pygame.Rect(self.x,self.y,self.width,self.height)
 
 
-class Magazine(Base_obj):
-    frame_count = 0
-    frame_limit = 90
-    def __init__(self,capa,rld_sp):
-        super().__init__(100,100,30,60)
-        self.capacity = capa
-        self.reload_speed = rld_sp
-        self.bullet_dict = {}
-        self.make_bullet_dict()
-        self.iterator = self.bul_index()
+class Cosmic(Base_obj):
+    vel = 1
+    def __init__(self,file_name,x,y,width = 50,height = 50):
+         Base_obj.__init__(self,x,y,width,height)
+         self.image = pygame.transform.scale(pygame.image.load(
+            os.path.join('../Assets',file_name)).convert_alpha() , (self.width,self.height))
 
-    def draw(self):
-        pygame.draw.rect(WIN,LI_GREY,self.obj,0,2)
-        pygame.draw.rect(WIN,BLACK,self.obj,1,2)
-        for bul in self.bullet_dict.values():
-            pygame.draw.rect(WIN,bul.color,bul.obj,0,3)
-            pygame.draw.rect(WIN,BLACK,bul.obj,1,3)
+    def draw(self,win):
+        win.blit(self.image,(self.x,self.y))
 
-    def make_ammo_height(self):
-        return (self.height - 3 * (self.capacity + 1))/self.capacity
+objs_name = []
+for i in range(1,8):
+    objs_name.append(f"Rock{i}.png")
 
-    def make_bullet_dict(self):
-        current_y = self.y + 3
-        for i in range(0,self.capacity):
-            self.bullet_dict[i] = Ammo(self.x + 3 , current_y , self.width - 6 , self.make_ammo_height())
-            current_y += self.make_ammo_height() + 3
-
-    def bul_index(self):
-        for index in self.bullet_dict.keys():
-            yield index
-
-    def make_changes(self):
-        try:
-            current_index = next(self.iterator)
-            self.bullet_dict[current_index].color = RED
-
-        except StopIteration:
-            if self.frame_counter():
-                self.frame_count = 0
-                self.iterator = self.bul_index()
-                for obj in self.bullet_dict.values():
-                    obj.color = YELLOW
-
-Mag = Magazine(5,10)
-n = 0
+Rock_objs = []
+for x_coord in range(0,len(objs_name)):
+    Rock_objs.append(Cosmic(objs_name[x_coord],x_coord*50,0))
 
 
 def draw_surface():
-    WIN.fill(LI_GREY)
-    Mag.draw()
-    #pygame.gfxdraw.hline(WIN,50,100,50,BLACK)
+    WIN.fill(WHITE)
+    for rock in Rock_objs:
+        rock.draw(WIN)
     pygame.display.update()
 
 
@@ -90,7 +60,6 @@ def main():
                 run = False
 
         draw_surface()
-
     pygame.quit()
 
 if __name__ == "__main__":

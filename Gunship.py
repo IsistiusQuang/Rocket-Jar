@@ -7,6 +7,7 @@ from Base_Class import Base_obj
 from Vertical_Gunship import Vertical_GS
 from Horizontal_Gunship import Horizontal_GS
 
+pygame.display.init()
 
 class Gunship(Base_obj):
     score = 0
@@ -26,7 +27,7 @@ class Gunship(Base_obj):
         self.image = pygame.transform.rotate(
             pygame.transform.scale(
             pygame.image.load(
-                os.path.join('Assets',self.file_name)), (self.width,self.height)), self.rotate )
+                os.path.join('Assets',self.file_name)).convert_alpha(), (self.width,self.height)), self.rotate )
 
 
 class V_GS(Gunship,Vertical_GS):

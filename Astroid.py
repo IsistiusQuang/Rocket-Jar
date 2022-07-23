@@ -1,5 +1,7 @@
 import pygame
 import os
+pygame.display.init()
+
 from random import randint , choice
 
 from Backdrop import WIN_WIDTH , WIN_HEIGHT
@@ -14,17 +16,18 @@ def Alter_range():
 
 
 class Astroid_class(Base_obj):
-    astr_health = 6
+    astr_health = 10
     astroid_stage = 0
     move_count = 0
-    move_limit = 3 # test figure = 15
+    move_limit = 3 # test figure = 3
     current_alter_x = -2
     current_alter_y = 2
     flickered = flickering
 
     def __init__(self,name,x,y,width,height):
         self.image = self.make_image(name,width,height)
-        self.shadow = Astr_shadow(self.image,self.make_image(name[:-4]+"_hitted" + name[-4:],width,height))
+        self.shadow_image = self.make_image(name[:-4]+"_hitted"+name[-4:],width,height)
+        self.shadow = Astr_shadow(self.image,self.shadow_image)
         Base_obj.__init__(self,x+width,y-height,width,height)
         self.current_x = self.x
         self.current_y = self.y
@@ -40,7 +43,7 @@ class Astroid_class(Base_obj):
 
     def make_image(self,name,width,height):
         return pygame.transform.scale(
-            pygame.image.load(os.path.join('Assets',name)),(width,height))
+            pygame.image.load(os.path.join('Assets',name)).convert_alpha(),(width,height))
 
 
     def make_vel(self):
@@ -56,7 +59,6 @@ class Astroid_class(Base_obj):
 
     def make_border_limit(self):
         self.move_count = 0
-        #self.move_limit = 3
 
         self.current_x_limit.clear()
         self.current_y_limit.clear()
@@ -133,7 +135,6 @@ class Astroid_class(Base_obj):
 
     def to_checkpoint(self):
         self.move_count = self.move_limit
-        #self.move_limit = 0
         self.frame_count = 0
         objective = self.checkpoints[-1]
         self.frame_limit = randint(80,100)

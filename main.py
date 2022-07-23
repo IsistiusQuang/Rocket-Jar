@@ -5,6 +5,7 @@ from Gunship import YELLOW_SPACESHIP , RED_SPACESHIP
 from List_Of_Astroids import Astroids
 from Target import Prize
 from Impact_Handling import PRICE_HIT , astroid_impact , bullet_impact , BULLET_FIRE_SOUND
+from Backdrop import COSMIC_STUFFS
 
 
 pygame.display.set_caption("First Game")
@@ -30,6 +31,9 @@ def main():
                 run = False
 
 
+        COSMIC_STUFFS.handle_cosmics()
+        Prize.handle()
+
         keys_pressed = pygame.key.get_pressed()
         YELLOW_SPACESHIP.movement(keys_pressed)
         RED_SPACESHIP.movement(keys_pressed)
@@ -54,7 +58,7 @@ def main():
                         astroid.to_checkpoint()
 
                     else:
-                        print("\t\tCheckpoint reached")
+                        #print("\t\tCheckpoint reached")
                         astroid.make_border_limit()
 
                 else:
